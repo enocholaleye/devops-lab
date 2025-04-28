@@ -1,22 +1,29 @@
 #!/bin/bash
 
-# Repo path
-REPO_DIR="/home/enoch/devops-labs"
+# auto_git_push.sh
+# Smart, clean Git auto-push script 🚀
 
-# Navigate to repo
-cd "$REPO_DIR" || { echo "❌ Repository directory not found!"; exit 1; }
+# Exit immediately if a command exits with a non-zero status
+set -e
 
-# Stage changes
-git add .
+# Get current branch name dynamically
+current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 # Ask for commit message
-read -p "Enter commit message (leave blank for 'Auto update'): " COMMIT_MSG
-COMMIT_MSG=${COMMIT_MSG:-"Auto update"}
+read -p "Enter commit message (leave blank for 'Auto update'): " commit_message
 
-# Commit
-git commit -m "$COMMIT_MSG"
+# Use 'Auto update' if no message provided
+if [ -z "$commit_message" ]; then
+    commit_message="Auto update"
+fi
 
-# Push
-git push origin main
+# Stage all changes
+git add .
 
-echo "✅ Successfully pushed changes to devops-labs repository!"
+# Commit changes
+git commit -m "$commit_message"
+
+# Push to current branch
+git push origin "$current_branch"
+
+echo "✅ Successfully pushed changes to '$current_branch' branch!"
