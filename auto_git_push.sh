@@ -17,6 +17,6 @@ COMMIT_MSG=${COMMIT_MSG:-"Auto update"}
 git commit -m "$COMMIT_MSG"
 
 # Push
-git push origin master
+git push origin main
 
 echo "✅ Successfully pushed changes to devops-labs repository!"
